@@ -36,3 +36,16 @@ A modern web service example demonstrating Redis caching with Node.js, Express, 
    ```bash
    git clone https://github.com/your-repo/redis-express-docker.git
    cd microservices-redis-esm
+sequenceDiagram
+    Client->>+App: GET /users/123
+    App->>+Redis: Check cache
+    Redis-->>-App: Not found
+    App->>+MongoDB: Query database
+    MongoDB-->>-App: Return user data
+    App->>+Redis: Cache with TTL
+    App-->>-Client: Return user data
+    
+    Client->>+App: GET /users/123
+    App->>+Redis: Check cache
+    Redis-->>-App: Found cached data
+    App-->>-Client: Return cached data
